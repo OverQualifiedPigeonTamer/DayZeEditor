@@ -69,6 +69,9 @@
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\OpenTK.dll</HintPath>
@@ -126,6 +129,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\GitHub.cs" />
+    <Compile Include="Forms\DNAKeycardsManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DNAKeyCardsManager.Designer.cs">
+      <DependentUpon>DNAKeycardsManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TerjeManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -502,6 +511,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\DNAKeyCardsManager.resx">
+      <DependentUpon>DNAKeycardsManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\TerjeManager.resx">
       <DependentUpon>TerjeManager.cs</DependentUpon>
     </EmbeddedResource>

@@ -48,6 +48,9 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -135,6 +138,17 @@
       <DependentUpon>ExpansionQuestAISpawnControl.cs</DependentUpon>
     </Compile>
     <Compile Include="DDS\DDS.cs" />
+    <Compile Include="DNAKeycards\DNA_Keycards.cs" />
+    <Compile Include="DNAKeycards\Loot\DNA_CrateSmol_Data.cs" />
+    <Compile Include="DNAKeycards\Loot\KeyCard_Clothing_Config.cs" />
+    <Compile Include="DNAKeycards\Loot\KeyCard_General_Config.cs" />
+    <Compile Include="DNAKeycards\Loot\KeyCard_Weapons_Config.cs" />
+    <Compile Include="DNAKeycards\System\CrateSmol_TimerSettings.cs" />
+    <Compile Include="DNAKeycards\System\DNA_ResetTimer_Settings.cs" />
+    <Compile Include="DNAKeycards\System\KeyCard_LootContainers_System_Config.cs" />
+    <Compile Include="DNAKeycards\System\KeyCard_Main_System_Config.cs" />
+    <Compile Include="DNAKeycards\System\KeyCard_Mob_System_Config.cs" />
+    <Compile Include="DNAKeycards\System\NewDoors_AlarmsAndNotifications.cs" />
     <Compile Include="DRJonesTrader\DrJonesAdmins.cs" />
     <Compile Include="DRJonesTrader\DrJonesObjects.cs" />
     <Compile Include="DRJonesTrader\DrJonesTrader.cs" />

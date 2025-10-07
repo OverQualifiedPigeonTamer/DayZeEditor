@@ -572,6 +572,11 @@ namespace DayZeEditor
                 else
                     MysteryBoxButton.Visible = false;
 
+                if (Directory.Exists(Projects.getActiveProject().projectFullName + "\\" + Projects.getActiveProject().ProfilePath + "\\DNA_Keycards"))
+                    DNAKeyCardsButton.Visible = true;
+                else
+                    DNAKeyCardsButton.Visible = false;
+
                 if (File.Exists(Projects.getActiveProject().projectFullName + "\\" + Projects.getActiveProject().ProfilePath + "\\MPG_Spawner\\Config.json"))
                     MPGSpawnerButton.Visible = true;
                 else
@@ -1429,6 +1434,32 @@ namespace DayZeEditor
                 _TM.Show();
                 Console.WriteLine("loading Utopia Airdrop manager....");
                 label1.Text = "Utopia Airdrop Manager";
+            }
+            timer1.Start();
+        }
+        private void DNAKeyCardsButton_Click(object sender, EventArgs e)
+        {
+            DNAKeyCardsManager _TM = Application.OpenForms["DNAKeyCardsManager"] as DNAKeyCardsManager;
+            if (_TM != null)
+            {
+                _TM.WindowState = FormWindowState.Normal;
+                _TM.BringToFront();
+                _TM.Activate();
+            }
+            else
+            {
+                closemdichildren();
+                _TM = new DNAKeyCardsManager
+                {
+                    MdiParent = this,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right,
+                    Location = new System.Drawing.Point(30, 0),
+                    Size = Form_Controls.Formsize - new System.Drawing.Size(37, 61),
+                    currentproject = Projects.getActiveProject()
+
+                };
+                _TM.Show();
+                Console.WriteLine("loading DNAKeyCards manager....");
             }
             timer1.Start();
         }
