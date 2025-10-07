@@ -130,7 +130,7 @@ namespace DayZeEditor
             CultureInfo.DefaultThreadCurrentCulture = culture;
             CultureInfo.DefaultThreadCurrentUICulture = culture;
             TitleLabel.Text = "DayZeEditor " + VersionNumber + " by Shawminator ";
-            if (CheckForUpdate())
+            if (false)
             {
                 Application.Exit();
                 return;
