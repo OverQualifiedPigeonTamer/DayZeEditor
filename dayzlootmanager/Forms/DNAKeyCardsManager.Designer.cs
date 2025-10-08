@@ -77,9 +77,11 @@ namespace DayZeEditor
             this.dna_DefaultMobTB = new System.Windows.Forms.TextBox();
             this.m_DNAConfig_Mob_SystemLB = new System.Windows.Forms.ListBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.ResetTimerLB = new System.Windows.Forms.ListBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.ResetTimerLB = new System.Windows.Forms.ListBox();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.darkToolStrip21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dna_SettingNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CrateLocationPOSXNUD)).BeginInit();
@@ -598,7 +600,8 @@ namespace DayZeEditor
             this.toolStripSeparator1,
             this.MobButton,
             this.toolStripSeparator2,
-            this.ResetTimerButton});
+            this.ResetTimerButton,
+            this.toolStripButton1});
             this.darkToolStrip23.Location = new System.Drawing.Point(0, 45);
             this.darkToolStrip23.Name = "darkToolStrip23";
             this.darkToolStrip23.Padding = new System.Windows.Forms.Padding(5, 0, 1, 0);
@@ -661,6 +664,7 @@ namespace DayZeEditor
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 73);
             this.tabControl1.Name = "tabControl1";
@@ -788,18 +792,14 @@ namespace DayZeEditor
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             // 
-            // ResetTimerLB
+            // textBox1
             // 
-            this.ResetTimerLB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.ResetTimerLB.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.ResetTimerLB.ForeColor = System.Drawing.SystemColors.Control;
-            this.ResetTimerLB.FormattingEnabled = true;
-            this.ResetTimerLB.Location = new System.Drawing.Point(8, 3);
-            this.ResetTimerLB.Name = "ResetTimerLB";
-            this.ResetTimerLB.Size = new System.Drawing.Size(860, 316);
-            this.ResetTimerLB.TabIndex = 126;
-            this.ResetTimerLB.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox_DrawItem);
-            this.ResetTimerLB.SelectedIndexChanged += new System.EventHandler(this.ResetTimerLB_SelectedIndexChanged);
+            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.textBox1.ForeColor = System.Drawing.SystemColors.Control;
+            this.textBox1.Location = new System.Drawing.Point(122, 351);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(237, 20);
+            this.textBox1.TabIndex = 133;
             // 
             // numericUpDown1
             // 
@@ -816,14 +816,41 @@ namespace DayZeEditor
             this.numericUpDown1.TabIndex = 127;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox1
+            // ResetTimerLB
             // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.textBox1.ForeColor = System.Drawing.SystemColors.Control;
-            this.textBox1.Location = new System.Drawing.Point(122, 351);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(237, 20);
-            this.textBox1.TabIndex = 133;
+            this.ResetTimerLB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.ResetTimerLB.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.ResetTimerLB.ForeColor = System.Drawing.SystemColors.Control;
+            this.ResetTimerLB.FormattingEnabled = true;
+            this.ResetTimerLB.Location = new System.Drawing.Point(8, 3);
+            this.ResetTimerLB.Name = "ResetTimerLB";
+            this.ResetTimerLB.Size = new System.Drawing.Size(860, 316);
+            this.ResetTimerLB.TabIndex = 126;
+            this.ResetTimerLB.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox_DrawItem);
+            this.ResetTimerLB.SelectedIndexChanged += new System.EventHandler(this.ResetTimerLB_SelectedIndexChanged);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(110)))), ((int)(((byte)(175)))));
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(87, 25);
+            this.toolStripButton1.Text = "LootContainer";
+            this.toolStripButton1.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.tabPage4.ForeColor = System.Drawing.SystemColors.Control;
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(1015, 565);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "tabPage4";
+            this.tabPage4.Click += new System.EventHandler(this.tabPage4_Click);
             // 
             // DNAKeyCardsManager
             // 
@@ -920,5 +947,7 @@ namespace DayZeEditor
         private System.Windows.Forms.ListBox ResetTimerLB;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.TabPage tabPage4;
     }
 }

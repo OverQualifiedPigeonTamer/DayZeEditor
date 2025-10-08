@@ -109,15 +109,15 @@ namespace DayZeEditor
             System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
 
             Projectname = currentproject.ProjectName;
-            DNAKeyCardPAth = currentproject.projectFullName + "\\" + currentproject.ProfilePath + "\\";
-            Console.WriteLine("serializing " + Path.GetFileName(DNAKeyCardPAth));
-            DNA_Keycards = new DNA_Keycards(DNAKeyCardPAth);
-            loadDNSKeycardSettings();
-            loadDNSMobSettings();
+            DNAKeyCardPath = currentproject.projectFullName + "\\" + currentproject.ProfilePath + "\\";
+            Console.WriteLine("serializing " + Path.GetFileName(DNAKeyCardPath));
+            DNA_Keycards = new DNA_Keycards(DNAKeyCardPath);
+            loadDNAKeycardSettings();
+            loadDNAMobSettings();
             loadDNAResetTimerSettings();
         }
 
-        private void loadDNSMobSettings()
+        private void loadDNAMobSettings()
         {
             useraction = false;
 
@@ -136,7 +136,7 @@ namespace DayZeEditor
             dna_MobTypeTB.Text = DMS.dna_MobType;
             useraction = true;
         }
-        private void loadDNSKeycardSettings()
+        private void loadDNAKeycardSettings()
         {
             useraction = false;
 
@@ -290,6 +290,11 @@ namespace DayZeEditor
         }
 
         private void ResetTimerLB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage4_Click(object sender, EventArgs e)
         {
 
         }
