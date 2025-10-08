@@ -69,7 +69,11 @@ namespace DayZeLib
         public string keyclass { get; set; }
         public int openable { get; set; }
         public BindingList<string> chest { get; set; }
-        public decimal LootRandomization { get; set; }
+        public decimal lootrandomize { get; set; }
+        public int maxLootItems { get; set; }
+        public int respawn { get; set; }
+        public int respawn_timer { get; set; }
+        public int randomize_position { get; set; }
         public int light { get; set; }
         public BindingList<string> loot { get; set; }
 

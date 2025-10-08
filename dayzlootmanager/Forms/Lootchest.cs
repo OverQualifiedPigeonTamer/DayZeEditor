@@ -137,9 +137,12 @@ namespace DayZeEditor
             useraction = false;
             nameTB.Text = CurrentLootChestLocation.name;
             numberNUD.Value = CurrentLootChestLocation.number;
+            numberMaxLoot.Value = CurrentLootChestLocation.maxLootItems;
             keyclassTB.Text = CurrentLootChestLocation.keyclass;
-            LootRandomizationNUD.Value = (decimal)CurrentLootChestLocation.LootRandomization;
+            LootRandomizationNUD.Value = (decimal)CurrentLootChestLocation.lootrandomize;
             LightCB.Checked = CurrentLootChestLocation.light == 1 ? true : false;
+            checkBox_RandomizePos.Checked = CurrentLootChestLocation.randomize_position == 1 ? true : false;
+            checkBox_Respawn.Checked = CurrentLootChestLocation.respawn == 1 ? true : false;
             comboBox2.SelectedItem = (LootchestOpenable)CurrentLootChestLocation.openable;
 
 
@@ -227,9 +230,14 @@ namespace DayZeEditor
                 number = 1,
                 pos = new BindingList<string>(),
                 keyclass = "",
+                maxLootItems = 10,
+                respawn = 0,
+                respawn_timer = 15,
+                randomize_position = 1,
                 chest = new BindingList<string>(),
                 loot = new BindingList<string>(),
                 _pos = new BindingList<Vec3PandR>()
+
             }
             );
             LootChestsLocationsLB.SelectedIndex = -1;
@@ -593,6 +601,12 @@ namespace DayZeEditor
             CurrentLootChestLocation.number = (int)numberNUD.Value;
             LootChestTable.isDirty = true;
         }
+        private void numberMaxLootItems_ValueChanged(object sender, EventArgs e)
+        {
+            if (!useraction) { return; }
+            CurrentLootChestLocation.maxLootItems = (int)numberMaxLoot.Value;
+            LootChestTable.isDirty = true;
+        }
         private void nameTB_TextChanged(object sender, EventArgs e)
         {
             if (!useraction) { return; }
@@ -602,7 +616,19 @@ namespace DayZeEditor
         private void LootRandomizationNUD_ValueChanged(object sender, EventArgs e)
         {
             if (!useraction) { return; }
-            CurrentLootChestLocation.LootRandomization = LootRandomizationNUD.Value;
+            CurrentLootChestLocation.lootrandomize = LootRandomizationNUD.Value;
+            LootChestTable.isDirty = true;
+        }
+        private void ChestRandomization_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!useraction) { return; }
+            CurrentLootChestLocation.randomize_position = checkBox_RandomizePos.Checked == true ? 1 : 0;
+            LootChestTable.isDirty = true;
+        }
+        private void ChestRespawn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!useraction) { return; }
+            CurrentLootChestLocation.respawn = checkBox_Respawn.Checked == true ? 1 : 0;
             LootChestTable.isDirty = true;
         }
         private void LightCB_CheckedChanged(object sender, EventArgs e)
@@ -1340,6 +1366,31 @@ namespace DayZeEditor
 
         private void darkButton27_Click(object sender, EventArgs e)
         {
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox3_CheckedChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void darkLabel24_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void darkLabel25_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

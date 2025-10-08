@@ -19,7 +19,7 @@ namespace DayZeEditor
     public partial class DNAKeyCardsManager : DarkForm
     {
         public Project currentproject { get; set; }
-        public string DNAKeyCardPAth { get; private set; }
+        public string DNAKeyCardPath { get; private set; }
         public string Projectname { get; private set; }
 
         public DNA_Keycards DNA_Keycards { get; set; }
