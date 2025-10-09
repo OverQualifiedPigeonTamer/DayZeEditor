@@ -138,6 +138,7 @@ namespace DayZeEditor
             nameTB.Text = CurrentLootChestLocation.name;
             numberNUD.Value = CurrentLootChestLocation.number;
             numberMaxLoot.Value = CurrentLootChestLocation.maxLootItems;
+            numberRespawnTimer.Value = CurrentLootChestLocation.respawn_timer;
             keyclassTB.Text = CurrentLootChestLocation.keyclass;
             LootRandomizationNUD.Value = (decimal)CurrentLootChestLocation.lootrandomize;
             LightCB.Checked = CurrentLootChestLocation.light == 1 ? true : false;
@@ -605,6 +606,12 @@ namespace DayZeEditor
         {
             if (!useraction) { return; }
             CurrentLootChestLocation.maxLootItems = (int)numberMaxLoot.Value;
+            LootChestTable.isDirty = true;
+        }
+        private void numberRespawnTimer_ValueChanged(object sender, EventArgs e)
+        {
+            if (!useraction) { return; }
+            CurrentLootChestLocation.respawn_timer = (int)numberRespawnTimer.Value;
             LootChestTable.isDirty = true;
         }
         private void nameTB_TextChanged(object sender, EventArgs e)
