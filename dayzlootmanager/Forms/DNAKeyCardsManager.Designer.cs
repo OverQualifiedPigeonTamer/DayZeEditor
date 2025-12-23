@@ -68,6 +68,7 @@ namespace DayZeEditor
             this.MobButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ResetTimerButton = new System.Windows.Forms.ToolStripButton();
+            this.LootContainerButton = new System.Windows.Forms.ToolStripButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -80,7 +81,6 @@ namespace DayZeEditor
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.ResetTimerLB = new System.Windows.Forms.ListBox();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.darkToolStrip21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dna_SettingNUD)).BeginInit();
@@ -601,7 +601,7 @@ namespace DayZeEditor
             this.MobButton,
             this.toolStripSeparator2,
             this.ResetTimerButton,
-            this.toolStripButton1});
+            this.LootContainerButton});
             this.darkToolStrip23.Location = new System.Drawing.Point(0, 45);
             this.darkToolStrip23.Name = "darkToolStrip23";
             this.darkToolStrip23.Padding = new System.Windows.Forms.Padding(5, 0, 1, 0);
@@ -654,9 +654,22 @@ namespace DayZeEditor
             this.ResetTimerButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(110)))), ((int)(((byte)(175)))));
             this.ResetTimerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ResetTimerButton.Name = "ResetTimerButton";
-            this.ResetTimerButton.Size = new System.Drawing.Size(63, 25);
-            this.ResetTimerButton.Text = "RestTimer";
+            this.ResetTimerButton.Size = new System.Drawing.Size(69, 25);
+            this.ResetTimerButton.Text = "ResetTimer";
+            this.ResetTimerButton.ToolTipText = "ResetTimer";
             this.ResetTimerButton.Click += new System.EventHandler(this.ResetTimerButton_Click);
+            // 
+            // LootContainerButton
+            // 
+            this.LootContainerButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.LootContainerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.LootContainerButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(110)))), ((int)(((byte)(175)))));
+            this.LootContainerButton.Image = ((System.Drawing.Image)(resources.GetObject("LootContainerButton.Image")));
+            this.LootContainerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.LootContainerButton.Name = "LootContainerButton";
+            this.LootContainerButton.Size = new System.Drawing.Size(87, 25);
+            this.LootContainerButton.Text = "LootContainer";
+            this.LootContainerButton.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             // 
             // tabControl1
             // 
@@ -829,18 +842,6 @@ namespace DayZeEditor
             this.ResetTimerLB.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox_DrawItem);
             this.ResetTimerLB.SelectedIndexChanged += new System.EventHandler(this.ResetTimerLB_SelectedIndexChanged);
             // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(110)))), ((int)(((byte)(175)))));
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(87, 25);
-            this.toolStripButton1.Text = "LootContainer";
-            this.toolStripButton1.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
-            // 
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
@@ -947,7 +948,7 @@ namespace DayZeEditor
         private System.Windows.Forms.ListBox ResetTimerLB;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton LootContainerButton;
         private System.Windows.Forms.TabPage tabPage4;
     }
 }
