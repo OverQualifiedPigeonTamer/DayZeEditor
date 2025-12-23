@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.SqlTypes;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
 
 namespace DayZeLib
@@ -17,7 +19,7 @@ namespace DayZeLib
     public class ExpansionAISettings
     {
         [JsonIgnore]
-        const int CurrentVersion = 15;
+        const int CurrentVersion = 19;
         [JsonIgnore]
         public string Filename { get; set; }
         [JsonIgnore]
@@ -30,6 +32,8 @@ namespace DayZeLib
 
         public decimal ThreatDistanceLimit { get; set; }
         public decimal NoiseInvestigationDistanceLimit { get; set; }
+        public decimal MaxFlankingDistance { get; set; }
+        public int EnableFlankingOutsideCombat { get; set; }
         public decimal DamageMultiplier { get; set; }
         public decimal DamageReceivedMultiplier { get; set; }
         
@@ -37,10 +41,13 @@ namespace DayZeLib
         
         public int Vaulting { get; set; }
         public decimal SniperProneDistanceThreshold { get; set; }
+        public decimal AggressionTimeout { get;set; }
+        public decimal GuardAggressionTimeout { get; set; }
         public int Manners { get; set; }
         public int MemeLevel { get; set; }
         public int CanRecruitFriendly { get; set; }
         public int CanRecruitGuards { get; set; }
+        public int MaxRecruitableAI { get; set; }
         public BindingList<string> PreventClimb { get; set; }
         public decimal FormationScale { get; set; } //added in version 13
         public BindingList<string> PlayerFactions { get; set; }
@@ -49,6 +56,9 @@ namespace DayZeLib
 
         public int EnableZombieVehicleAttackHandler { get; set; }
         public int EnableZombieVehicleAttackPhysics { get; set; }
+
+        public int OverrideClientWeaponFiring { get; set; }
+        public int RecreateWeaponNetworkRepresentation { get; set; }
 
         public Dictionary<int, decimal> LightingConfigMinNightVisibilityMeters { get; set; }
 
@@ -82,14 +92,20 @@ namespace DayZeLib
             AccuracyMax = (decimal)0.95;
             ThreatDistanceLimit = (decimal)1000.0;
             NoiseInvestigationDistanceLimit = (decimal)500.0;
+            MaxFlankingDistance = (decimal)200.0;
+            EnableFlankingOutsideCombat = 0;
             DamageMultiplier = (decimal)1.0;
+            DamageReceivedMultiplier = (decimal)1.0;
             Admins = new BindingList<string>();
             Vaulting = 1;
             SniperProneDistanceThreshold = (decimal)0.0;
+            AggressionTimeout = (decimal)120.0;
+            GuardAggressionTimeout = (decimal)150.0;
             Manners = 0;
             MemeLevel = 1;
             CanRecruitFriendly = 1;
             CanRecruitGuards = 0;
+            MaxRecruitableAI = 1;
             PreventClimb = new BindingList<string>();
             FormationScale = (decimal)1.0;
             PlayerFactions = new BindingList<string>();
@@ -97,6 +113,8 @@ namespace DayZeLib
             LogAIKilled = 1;
             EnableZombieVehicleAttackHandler = 0;
             EnableZombieVehicleAttackPhysics = 0;
+            OverrideClientWeaponFiring = 1;
+            RecreateWeaponNetworkRepresentation = 1;
             LightingConfigMinNightVisibilityMeters = new Dictionary<int, decimal>
             {
                 {0, 100.0m },

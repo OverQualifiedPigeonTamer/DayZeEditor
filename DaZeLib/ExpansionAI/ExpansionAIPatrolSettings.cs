@@ -44,6 +44,13 @@ namespace DayZeLib
         VEHICLE = 16,
         ALL_OR = 30  //! AI | ANIMAL | INFECTED | PLAYER | VEHICLE
     };
+    public enum eAIStance
+    {
+        UNKNOWN = -1,
+        STANDING,
+        CROUCHED,
+        PRONE
+    }
     public enum eAILootingBehavior
     {
         NONE = 0,
@@ -77,7 +84,7 @@ namespace DayZeLib
     public class ExpansionAIPatrolSettings
     {
         [JsonIgnore]
-        const int CurrentVersion = 25;
+        const int CurrentVersion = 28;
         [JsonIgnore]
         public string Filename { get; set; }
         [JsonIgnore]
@@ -98,6 +105,8 @@ namespace DayZeLib
 
         public decimal ThreatDistanceLimit { get; set; }
         public decimal NoiseInvestigationDistanceLimit { get; set; }
+        public decimal MaxFlankingDistance { get; set; }
+        public int EnableFlankingOutsideCombat { get; set; }
         public decimal DamageMultiplier { get; set; }
         public decimal DamageReceivedMultiplier { get; set; }
 
@@ -123,6 +132,8 @@ namespace DayZeLib
             ThreatDistanceLimit = (decimal)-1.0;
             DamageMultiplier = (decimal)-1.0;
             NoiseInvestigationDistanceLimit = (decimal)-1.0;
+            MaxFlankingDistance = (decimal)-1;
+            EnableFlankingOutsideCombat = -1;
             DamageReceivedMultiplier = (decimal)-1.0;
             LoadBalancingCategories = new Dictionary<string, BindingList<Loadbalancingcategories>>();
             _LoadBalancingCategories = new BindingList<Loadbalancingcategorie>();
@@ -317,15 +328,21 @@ namespace DayZeLib
         public string LootingBehaviour { get; set; }
         public string Speed { get; set; }
         public string UnderThreatSpeed { get; set; }
+        public string DefaultStance { get; set; }
+        public decimal DefaultLookAngle { get; set; }
         public int CanBeLooted { get; set; }
+        public string LootDropOnDeath { get; set; }
         public int UnlimitedReload { get; set; }
         public decimal SniperProneDistanceThreshold { get; set; }
         public decimal AccuracyMin { get; set; }
         public decimal AccuracyMax { get; set; }
         public decimal ThreatDistanceLimit { get; set; }
         public decimal NoiseInvestigationDistanceLimit { get; set; }
+        public decimal MaxFlankingDistance { get; set; }
+        public int EnableFlankingOutsideCombat { get; set; }
         public decimal DamageMultiplier { get; set; }
         public decimal DamageReceivedMultiplier { get; set; }
+        public decimal HeadshotResistance { get; set; }
         public int CanBeTriggeredByAI { get; set; }
         public decimal MinDistRadius { get; set; }
         public decimal MaxDistRadius { get; set; }
@@ -356,15 +373,21 @@ namespace DayZeLib
             LootingBehaviour = "DEFAULT";
             Speed = "";
             UnderThreatSpeed = "";
+            DefaultStance = "STANDING";
+            DefaultLookAngle = (decimal)0.0;
             CanBeLooted = 1;
+            LootDropOnDeath = "";
             UnlimitedReload = 0;
             SniperProneDistanceThreshold = (decimal)0.0;
             AccuracyMin = -1;
             AccuracyMax = -1;
             ThreatDistanceLimit = -1;
             NoiseInvestigationDistanceLimit = -1;
+            MaxFlankingDistance = -1;
+            EnableFlankingOutsideCombat = -1;
             DamageMultiplier = -1;
             DamageReceivedMultiplier = (decimal)-1.0;
+            HeadshotResistance = 0;
             CanBeTriggeredByAI = 0;
             MinDistRadius = -1;
             MaxDistRadius = -1;
@@ -395,15 +418,21 @@ namespace DayZeLib
             LootingBehaviour = "DEFAULT";
             Speed = spd;
             UnderThreatSpeed = threatspd;
+            DefaultStance = "STANDING";
+            DefaultLookAngle = (decimal)0.0;
             CanBeLooted = canbelooted == true ? 1 : 0;
+            LootDropOnDeath = "";
             UnlimitedReload = unlimitedreload == true ? 1 : 0; ;
             SniperProneDistanceThreshold = (decimal)0.0;
             AccuracyMin = -1;
             AccuracyMax = -1;
             ThreatDistanceLimit = -1;
             NoiseInvestigationDistanceLimit = -1;
+            MaxFlankingDistance = -1;
+            EnableFlankingOutsideCombat = -1;
             DamageMultiplier = -1;
             DamageReceivedMultiplier = (decimal)-1.0;
+            HeadshotResistance = 0;
             CanBeTriggeredByAI = 0;
             MinDistRadius = -1;
             MaxDistRadius = -1;
