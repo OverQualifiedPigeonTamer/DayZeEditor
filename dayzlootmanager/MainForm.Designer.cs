@@ -734,6 +734,7 @@ namespace DayZeEditor
             this.DNAKeyCardsButton.Size = new System.Drawing.Size(88, 19);
             this.DNAKeyCardsButton.Text = "DNA KeyCards";
             this.DNAKeyCardsButton.Visible = false;
+            this.DNAKeyCardsButton.Click += new System.EventHandler(this.DNAKeyCardsButton_Click);
             // 
             // PlayerDBButton
             // 

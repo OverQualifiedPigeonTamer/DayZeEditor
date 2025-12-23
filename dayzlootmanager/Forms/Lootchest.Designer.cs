@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.Win32;
+
 namespace DayZeEditor
 {
     partial class Lootchest
@@ -39,6 +41,8 @@ namespace DayZeEditor
             this.LootChestsLocationsLB = new System.Windows.Forms.ListBox();
             this.darkLabel1 = new DarkUI.Controls.DarkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.numberMaxLoot = new System.Windows.Forms.NumericUpDown();
+            this.darkLabel24 = new DarkUI.Controls.DarkLabel();
             this.ItemrarityChestNUD = new System.Windows.Forms.NumericUpDown();
             this.ItemrarityChestCB = new System.Windows.Forms.CheckBox();
             this.LightCB = new System.Windows.Forms.CheckBox();
@@ -74,6 +78,10 @@ namespace DayZeEditor
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.numberRespawnTimer = new System.Windows.Forms.NumericUpDown();
+            this.darkLabel25 = new DarkUI.Controls.DarkLabel();
+            this.checkBox_RandomizePos = new System.Windows.Forms.CheckBox();
+            this.checkBox_Respawn = new System.Windows.Forms.CheckBox();
             this.darkButton26 = new DarkUI.Controls.DarkButton();
             this.darkLabel20 = new DarkUI.Controls.DarkLabel();
             this.darkButton23 = new DarkUI.Controls.DarkButton();
@@ -167,6 +175,7 @@ namespace DayZeEditor
             this.darkToolStrip21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LootRandomizationNUD)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numberMaxLoot)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemrarityChestNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberNUD)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -179,6 +188,7 @@ namespace DayZeEditor
             this.tabControl2.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numberRespawnTimer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posZRNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posYRNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posXRNUD)).BeginInit();
@@ -297,6 +307,8 @@ namespace DayZeEditor
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox1.Controls.Add(this.numberMaxLoot);
+            this.groupBox1.Controls.Add(this.darkLabel24);
             this.groupBox1.Controls.Add(this.ItemrarityChestNUD);
             this.groupBox1.Controls.Add(this.ItemrarityChestCB);
             this.groupBox1.Controls.Add(this.LightCB);
@@ -328,6 +340,34 @@ namespace DayZeEditor
             this.groupBox1.TabIndex = 91;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Loot chests";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // numberMaxLoot
+            // 
+            this.numberMaxLoot.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.numberMaxLoot.ForeColor = System.Drawing.SystemColors.Control;
+            this.numberMaxLoot.Location = new System.Drawing.Point(179, 70);
+            this.numberMaxLoot.Maximum = new decimal(new int[] {
+            20000,
+            0,
+            0,
+            0});
+            this.numberMaxLoot.Name = "numberMaxLoot";
+            this.numberMaxLoot.Size = new System.Drawing.Size(65, 20);
+            this.numberMaxLoot.TabIndex = 139;
+            this.numberMaxLoot.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numberMaxLoot.ValueChanged += new System.EventHandler(this.numberMaxLootItems_ValueChanged);
+            // 
+            // darkLabel24
+            // 
+            this.darkLabel24.AutoSize = true;
+            this.darkLabel24.ForeColor = System.Drawing.SystemColors.Control;
+            this.darkLabel24.Location = new System.Drawing.Point(250, 70);
+            this.darkLabel24.Name = "darkLabel24";
+            this.darkLabel24.Size = new System.Drawing.Size(79, 13);
+            this.darkLabel24.TabIndex = 138;
+            this.darkLabel24.Text = "Max Loot Items";
+            this.darkLabel24.Click += new System.EventHandler(this.darkLabel24_Click);
             // 
             // ItemrarityChestNUD
             // 
@@ -764,6 +804,10 @@ namespace DayZeEditor
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.numberRespawnTimer);
+            this.groupBox3.Controls.Add(this.darkLabel25);
+            this.groupBox3.Controls.Add(this.checkBox_RandomizePos);
+            this.groupBox3.Controls.Add(this.checkBox_Respawn);
             this.groupBox3.Controls.Add(this.darkButton26);
             this.groupBox3.Controls.Add(this.darkLabel20);
             this.groupBox3.Controls.Add(this.darkButton23);
@@ -781,10 +825,64 @@ namespace DayZeEditor
             this.groupBox3.ForeColor = System.Drawing.SystemColors.Control;
             this.groupBox3.Location = new System.Drawing.Point(377, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(386, 443);
+            this.groupBox3.Size = new System.Drawing.Size(417, 443);
             this.groupBox3.TabIndex = 96;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Locations";
+            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
+            // 
+            // numberRespawnTimer
+            // 
+            this.numberRespawnTimer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.numberRespawnTimer.ForeColor = System.Drawing.SystemColors.Control;
+            this.numberRespawnTimer.Location = new System.Drawing.Point(310, 9);
+            this.numberRespawnTimer.Maximum = new decimal(new int[] {
+            20000,
+            0,
+            0,
+            0});
+            this.numberRespawnTimer.Name = "numberRespawnTimer";
+            this.numberRespawnTimer.Size = new System.Drawing.Size(60, 20);
+            this.numberRespawnTimer.TabIndex = 140;
+            this.numberRespawnTimer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numberRespawnTimer.ValueChanged += new System.EventHandler(this.numberRespawnTimer_ValueChanged);
+            // 
+            // darkLabel25
+            // 
+            this.darkLabel25.AutoSize = true;
+            this.darkLabel25.ForeColor = System.Drawing.SystemColors.Control;
+            this.darkLabel25.Location = new System.Drawing.Point(376, 11);
+            this.darkLabel25.Name = "darkLabel25";
+            this.darkLabel25.Size = new System.Drawing.Size(33, 13);
+            this.darkLabel25.TabIndex = 139;
+            this.darkLabel25.Text = "Timer";
+            this.darkLabel25.Click += new System.EventHandler(this.darkLabel25_Click);
+            // 
+            // checkBox_RandomizePos
+            // 
+            this.checkBox_RandomizePos.AutoSize = true;
+            this.checkBox_RandomizePos.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox_RandomizePos.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_RandomizePos.Location = new System.Drawing.Point(233, 32);
+            this.checkBox_RandomizePos.Name = "checkBox_RandomizePos";
+            this.checkBox_RandomizePos.Size = new System.Drawing.Size(119, 17);
+            this.checkBox_RandomizePos.TabIndex = 138;
+            this.checkBox_RandomizePos.Text = "Randomize Position";
+            this.checkBox_RandomizePos.UseVisualStyleBackColor = true;
+            this.checkBox_RandomizePos.CheckedChanged += new System.EventHandler(this.ChestRandomization_CheckedChanged);
+            // 
+            // checkBox_Respawn
+            // 
+            this.checkBox_Respawn.AutoSize = true;
+            this.checkBox_Respawn.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox_Respawn.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_Respawn.Location = new System.Drawing.Point(232, 12);
+            this.checkBox_Respawn.Name = "checkBox_Respawn";
+            this.checkBox_Respawn.Size = new System.Drawing.Size(71, 17);
+            this.checkBox_Respawn.TabIndex = 137;
+            this.checkBox_Respawn.Text = "Respawn";
+            this.checkBox_Respawn.UseVisualStyleBackColor = true;
+            this.checkBox_Respawn.CheckedChanged += new System.EventHandler(this.ChestRespawn_CheckedChanged);
             // 
             // darkButton26
             // 
@@ -998,7 +1096,7 @@ namespace DayZeEditor
             this.posLB.FormattingEnabled = true;
             this.posLB.Location = new System.Drawing.Point(6, 73);
             this.posLB.Name = "posLB";
-            this.posLB.Size = new System.Drawing.Size(374, 303);
+            this.posLB.Size = new System.Drawing.Size(405, 303);
             this.posLB.TabIndex = 123;
             this.posLB.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox_DrawItem);
             this.posLB.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
@@ -1937,6 +2035,7 @@ namespace DayZeEditor
             ((System.ComponentModel.ISupportInitialize)(this.LootRandomizationNUD)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numberMaxLoot)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemrarityChestNUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberNUD)).EndInit();
             this.tabControl1.ResumeLayout(false);
@@ -1951,6 +2050,7 @@ namespace DayZeEditor
             this.tabPage5.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numberRespawnTimer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.posZRNUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.posYRNUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.posXRNUD)).EndInit();
@@ -2121,5 +2221,11 @@ namespace DayZeEditor
         private System.Windows.Forms.Label label2;
         private DarkUI.Controls.DarkButton darkButton26;
         private DarkUI.Controls.DarkButton darkButton27;
+        private System.Windows.Forms.CheckBox checkBox_Respawn;
+        private DarkUI.Controls.DarkLabel darkLabel24;
+        private System.Windows.Forms.CheckBox checkBox_RandomizePos;
+        private System.Windows.Forms.NumericUpDown numberMaxLoot;
+        private DarkUI.Controls.DarkLabel darkLabel25;
+        private System.Windows.Forms.NumericUpDown numberRespawnTimer;
     }
 }
