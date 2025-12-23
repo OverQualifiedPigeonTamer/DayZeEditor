@@ -129,6 +129,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\GitHub.cs" />
+    <Compile Include="Form4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form4.Designer.cs">
+      <DependentUpon>Form4.cs</DependentUpon>
     <Compile Include="Forms\DNAKeycardsManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -511,6 +516,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form4.resx">
+      <DependentUpon>Form4.cs</DependentUpon>
     <EmbeddedResource Include="Forms\DNAKeyCardsManager.resx">
       <DependentUpon>DNAKeycardsManager.cs</DependentUpon>
     </EmbeddedResource>
@@ -720,9 +727,7 @@
     <None Include="Maps\barrington_Map.png.xyz" />
     <None Include="Maps\bearisland_Map.png.xyz" />
     <None Include="Maps\bitterroot_Map.png.xyz" />
-    <None Include="Maps\Capare_Map.png.xyz">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Maps\Capare_Map.png.xyz" />
     <None Include="Maps\chernarusplus_Map.png.xyz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -801,9 +806,7 @@
     <Content Include="Maps\barrington_Map.png" />
     <Content Include="Maps\bearisland_Map.png" />
     <Content Include="Maps\bitterroot_Map.png" />
-    <Content Include="Maps\Capare_Map.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Maps\Capare_Map.png" />
     <Content Include="Maps\chiemsee_Map.png" />
     <Content Include="Maps\chernarusplus_Map.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

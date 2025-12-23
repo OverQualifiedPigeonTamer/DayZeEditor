@@ -33,7 +33,7 @@ namespace DayZeEditor
         const int SW_HIDE = 0;
         const int SW_SHOW = 5;
 
-        public string VersionNumber = "0.8.4.4";
+        public string VersionNumber = "0.8.4.8";
         private static bool hidden;
         public static String ProjectsJson = Application.StartupPath + "\\Project\\Projects.json";
         public ProjectList Projects;
@@ -476,7 +476,8 @@ namespace DayZeEditor
                 else
                     BBPManagerButton.Visible = false;
 
-                if (File.Exists(Projects.getActiveProject().projectFullName + "\\" + Projects.getActiveProject().ProfilePath + "\\RaG_BaseBuilding\\RaG_BaseBuilding.json"))
+                if (File.Exists(Projects.getActiveProject().projectFullName + "\\" + Projects.getActiveProject().ProfilePath + "\\RaG_Core\\Configs\\RaG_BaseBuilding\\RaG_BaseBuilding.json") &&
+                    File.Exists(Projects.getActiveProject().projectFullName + "\\" + Projects.getActiveProject().ProfilePath + "\\RaG_Core\\Configs\\RaG_Core\\RaG_Core.json"))
                     RAGTysonBBManagerButton.Visible = true;
                 else
                     RAGTysonBBManagerButton.Visible = false;

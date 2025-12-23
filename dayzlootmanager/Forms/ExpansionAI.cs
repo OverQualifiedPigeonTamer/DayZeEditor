@@ -29,9 +29,11 @@ namespace DayZeEditor
         public ExpansionAISettings AISettings { get; set; }
         public ExpansionAILocationSettings ExpansionAILocationSettings { get; set; }
         public ExpansionAIPatrolSettings AIPatrolSettings { get; set; }
-        public BindingList<AILoadouts> LoadoutList { get; private set; }
+        public AILoadoutsConfig AILoadoutsConfig { get; set; }
+       
         public BindingList<string> LoadoutNameList { get; private set; }
         public BindingList<string> LoadoutNameList2 { get; private set; }
+        public BindingList<string> LootDropOnDeathNameList { get; private set; }
         public BindingList<string> Factions { get; set; }
         public MapData MapData { get; private set; }
         public Spatial_Notifications m_Spatial_Notifications { get; set; }
@@ -39,6 +41,7 @@ namespace DayZeEditor
         public Spatial_Groups m_Spatial_Groups { get; set; }
         public string AISettingsPath;
         public string AILoadoutsPath;
+        public string LootDropOnDeathListPath;
         public string AIPatrolSettingsPath;
         public string AILocationsPath;
         public string AIDynamicSettingsPath;
@@ -92,7 +95,9 @@ namespace DayZeEditor
 
             bool needtosave = false;
 
-            LoadoutList = new BindingList<AILoadouts>();
+            AILoadoutsConfig = new AILoadoutsConfig();
+
+            AILoadoutsConfig.LoadoutsData = new BindingList<AILoadouts>();
             AILoadoutsPath = currentproject.projectFullName + "\\" + currentproject.ProfilePath + "\\ExpansionMod\\Loadouts";
             DirectoryInfo dinfo = new DirectoryInfo(AILoadoutsPath);
             FileInfo[] Files = dinfo.GetFiles("*.json");
@@ -105,7 +110,26 @@ namespace DayZeEditor
                     AILoadouts.Filename = file.FullName;
                     AILoadouts.Setname();
                     AILoadouts.isDirty = false;
-                    LoadoutList.Add(AILoadouts);
+                    AILoadoutsConfig.LoadoutsData.Add(AILoadouts);
+                }
+                catch { }
+            }
+
+            AILoadoutsConfig.AILootDropsData = new BindingList<AILootDrops>();
+            LootDropOnDeathListPath = currentproject.projectFullName + "\\" + currentproject.ProfilePath + "\\ExpansionMod\\AI\\LootDrops";
+            DirectoryInfo dinfo1 = new DirectoryInfo(LootDropOnDeathListPath);
+            FileInfo[] Files1 = dinfo1.GetFiles("*.json");
+            foreach (FileInfo file in Files1)
+            {
+                try
+                {
+                    Console.WriteLine("serializing " + Path.GetFileName(file.FullName));
+                    AILootDrops AILootDrops = new AILootDrops();
+                    AILootDrops.LootdropList = JsonSerializer.Deserialize<BindingList<AILoadouts>>(File.ReadAllText(file.FullName));
+                    AILootDrops.Filename = file.FullName;
+                    AILootDrops.Setname();
+                    AILootDrops.isDirty = false;
+                    AILoadoutsConfig.AILootDropsData.Add(AILootDrops);
                 }
                 catch { }
             }
@@ -310,7 +334,7 @@ namespace DayZeEditor
                 needtosave = true;
             }
 
-            foreach (AILoadouts AILO in LoadoutList)
+            foreach (AILootDrops AILO in AILoadoutsConfig.AILootDropsData)
             {
                 if (AILO.isDirty)
                 {
@@ -393,7 +417,7 @@ namespace DayZeEditor
                 midifiedfiles.Add(Path.GetFileName(AIPatrolSettings.Filename));
             }
 
-            foreach (AILoadouts AILO in LoadoutList)
+            foreach (AILoadouts AILO in AILoadoutsConfig.LoadoutsData)
             {
                 if (AILO.isDirty)
                 {
@@ -496,19 +520,35 @@ namespace DayZeEditor
         private void SetupLoadoutList()
         {
             useraction = false;
-            LoadoutNameList = new BindingList<string>();
-            foreach (AILoadouts lo in LoadoutList)
+            LoadoutNameList = new BindingList<string>
+            {
+                ""
+            };
+            foreach (AILoadouts lo in AILoadoutsConfig.LoadoutsData)
             {
                 LoadoutNameList.Add(Path.GetFileNameWithoutExtension(lo.Filename));
             }
+            LootDropOnDeathNameList = new BindingList<string>
+            {
+                ""
+            };
+            foreach (AILootDrops AILootDrops in AILoadoutsConfig.AILootDropsData)
+            {
+               LootDropOnDeathNameList.Add(Path.GetFileNameWithoutExtension(AILootDrops.Name));
+            }
+
             StaticPatrolLB.Refresh();
 
             StaticPatrolLoadoutsCB.DisplayMember = "DisplayName";
             StaticPatrolLoadoutsCB.ValueMember = "Value";
             StaticPatrolLoadoutsCB.DataSource = new BindingList<string>(LoadoutNameList);
 
+            StaticPatrolLootDropOnDeathCB.DisplayMember = "DisplayName";
+            StaticPatrolLootDropOnDeathCB.ValueMember = "Value";
+            StaticPatrolLootDropOnDeathCB.DataSource = new BindingList<string>(LootDropOnDeathNameList);
+
             LoadoutNameList2 = new BindingList<string>();
-            foreach (AILoadouts lo in LoadoutList)
+            foreach (AILoadouts lo in AILoadoutsConfig.LoadoutsData)
             {
                 LoadoutNameList2.Add(Path.GetFileName(lo.Filename));
             }
@@ -736,6 +776,8 @@ namespace DayZeEditor
             AIGeneralAccuracyMaxNUD.Value = AIPatrolSettings.AccuracyMax;
             AIGeneralThreatDistanceLimitNUD.Value = AIPatrolSettings.ThreatDistanceLimit;
             AIGeneralNoiseInvestigationDistanceLimitNUD.Value = AIPatrolSettings.NoiseInvestigationDistanceLimit;
+            AIGeneralMaxFlankingDistanceNUD.Value = AIPatrolSettings.MaxFlankingDistance;
+            AIGeneralEnableFlankingOutsideCombatNUD.Value = AIPatrolSettings.EnableFlankingOutsideCombat;
             AIGeneralDanageMultiplierNUD.Value = AIPatrolSettings.DamageMultiplier;
             AIGeneralDamageReceivedMultiplierNUD.Value = AIPatrolSettings.DamageReceivedMultiplier;
             AIGeneralFormationScaleNUD.Value = AIPatrolSettings.FormationScale;
@@ -979,6 +1021,19 @@ namespace DayZeEditor
             AIPatrolSettings.NoiseInvestigationDistanceLimit = AIGeneralNoiseInvestigationDistanceLimitNUD.Value;
             AIPatrolSettings.isDirty = true;
         }
+        private void AIGeneralMaxFlankingDistanceNUD_ValueChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            AIPatrolSettings.MaxFlankingDistance = AIGeneralMaxFlankingDistanceNUD.Value;
+            AIPatrolSettings.isDirty = true;
+        }
+
+        private void AIGeneralEnableFlankingOutsideCombatNUD_ValueChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            AIPatrolSettings.EnableFlankingOutsideCombat = (int)AIGeneralEnableFlankingOutsideCombatNUD.Value;
+            AIPatrolSettings.isDirty = true;
+        }
 
         /// <summary>
         /// Stataic Patrol Settings
@@ -1012,6 +1067,8 @@ namespace DayZeEditor
             StaticPatrolBehaviorCB.SelectedIndex = StaticPatrolBehaviorCB.FindStringExact(CurrentPatrol.Behaviour);
             StaticPatrolSpeedCB.SelectedIndex = StaticPatrolSpeedCB.FindStringExact(CurrentPatrol.Speed);
             StaticPatrolUnderThreatSpeedCB.SelectedIndex = StaticPatrolUnderThreatSpeedCB.FindStringExact(CurrentPatrol.UnderThreatSpeed);
+            StaticPatroDefaultStanceCB.SelectedIndex = StaticPatroDefaultStanceCB.FindStringExact(CurrentPatrol.DefaultStance);
+            StaticPatrolDefaultLookAngleNUD.Value = CurrentPatrol.DefaultLookAngle;
             StaticPatrolRespawnTimeNUD.Value = CurrentPatrol.RespawnTime;
             StaticPatrolDespawnTimeNUD.Value = CurrentPatrol.DespawnTime;
             StaticPatrolMinDistRadiusNUD.Value = CurrentPatrol.MinDistRadius;
@@ -1023,6 +1080,7 @@ namespace DayZeEditor
             StaticPatrolThreatDistanceLimitNUD.Value = CurrentPatrol.ThreatDistanceLimit;
             StaticPatrolSniperProneDistanceThresholdNUD.Value = CurrentPatrol.SniperProneDistanceThreshold;
             StaticPatrolDamageMultiplierNUD.Value = CurrentPatrol.DamageMultiplier;
+            StaticPatrolHeadshotResistanceNUD.Value = CurrentPatrol.HeadshotResistance;
             StaticPatrolChanceCB.Value = CurrentPatrol.Chance;
             StaticPatrolCanBeLotedCB.Checked = CurrentPatrol.CanBeLooted == 1 ? true : false;
             StaticPatrolLoadoutsCB.SelectedIndex = StaticPatrolLoadoutsCB.FindStringExact(CurrentPatrol.Loadout);
@@ -1032,9 +1090,12 @@ namespace DayZeEditor
             StaticPatrolFormationLoosenessNUD.Value = CurrentPatrol.FormationLooseness;
             StaticPatrolLoadBalancingCategoryCB.SelectedIndex = StaticPatrolLoadBalancingCategoryCB.FindStringExact(CurrentPatrol.LoadBalancingCategory);
             StaticPatrolWaypointInterpolationCB.SelectedIndex = StaticPatrolWaypointInterpolationCB.FindStringExact(CurrentPatrol.WaypointInterpolation);
+            StaticPatrolLootDropOnDeathCB.SelectedIndex = StaticPatrolLootDropOnDeathCB.FindStringExact(CurrentPatrol.LootDropOnDeath);
             StaticPatrolUseRandomWaypointAsStartPointCB.Checked = CurrentPatrol.UseRandomWaypointAsStartPoint == 1 ? true : false;
             StaticPatrolCanBeTriggeredByAICB.Checked = CurrentPatrol.CanBeTriggeredByAI == 1 ? true : false;
             StaticPatrolNoiseInvestigationDistanceLimitNUD.Value = CurrentPatrol.NoiseInvestigationDistanceLimit;
+            StaticPatrolMaxFlankingDistanceNUD.Value = CurrentPatrol.MaxFlankingDistance;
+            StaticPatrolEnableFlankingOutsideCombatNUD.Value = CurrentPatrol.EnableFlankingOutsideCombat;
             StaticPatrolFormationScaleNUD.Value = CurrentPatrol.FormationScale;
             int StaticPatrolUnlimitedReloadBitmask = CurrentPatrol.UnlimitedReload;
             if (StaticPatrolUnlimitedReloadBitmask == 1)
@@ -1200,6 +1261,12 @@ namespace DayZeEditor
             CurrentPatrol.Loadout = StaticPatrolLoadoutsCB.GetItemText(StaticPatrolLoadoutsCB.SelectedItem);
             AIPatrolSettings.isDirty = true;
         }
+        private void StaticPatrolLootDropOnDeathCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            CurrentPatrol.LootDropOnDeath = StaticPatrolLootDropOnDeathCB.GetItemText(StaticPatrolLootDropOnDeathCB.SelectedItem);
+            AIPatrolSettings.isDirty = true;
+        }
         private void StaticPatrolNumberOfAINUD_ValueChanged(object sender, EventArgs e)
         {
             if (!useraction) return;
@@ -1314,6 +1381,13 @@ namespace DayZeEditor
             if (!useraction) return;
             CurrentPatrol.ThreatDistanceLimit = StaticPatrolThreatDistanceLimitNUD.Value;
             AIPatrolSettings.isDirty = true;
+        }
+        private void StaticPatrolHeadshotResistanceNUD_ValueChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            CurrentPatrol.HeadshotResistance = StaticPatrolHeadshotResistanceNUD.Value;
+            AIPatrolSettings.isDirty = true;
+
         }
         private void StaticPatrolMinSpreadRadiusNUD_ValueChanged(object sender, EventArgs e)
         {
@@ -1490,11 +1564,35 @@ namespace DayZeEditor
             CurrentPatrol.LootingBehaviour = UpdateCheckedItemsString(list, e.Index, e.NewValue);
             AIPatrolSettings.isDirty = true;
         }
-
         private void StaticPatrolFormationScaleNUD_ValueChanged(object sender, EventArgs e)
         {
             if (!useraction) return;
             CurrentPatrol.FormationScale = StaticPatrolFormationScaleNUD.Value;
+            AIPatrolSettings.isDirty = true;
+        }
+        private void StaticPatrolMaxFlankingDistanceNUD_ValueChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            CurrentPatrol.MaxFlankingDistance = StaticPatrolMaxFlankingDistanceNUD.Value;
+            AIPatrolSettings.isDirty = true;
+        }
+        private void StaticPatrolEnableFlankingOutsideCombatNUD_ValueChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            CurrentPatrol.EnableFlankingOutsideCombat = (int)StaticPatrolEnableFlankingOutsideCombatNUD.Value;
+            AIPatrolSettings.isDirty = true;
+        }
+        private void StaticPatroDefaultStanceCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            CurrentPatrol.DefaultStance = StaticPatroDefaultStanceCB.GetItemText(StaticPatroDefaultStanceCB.SelectedItem);
+            AIPatrolSettings.isDirty = true;
+        }
+
+        private void StaticPatrolDefaultLookAngleNUD_ValueChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            CurrentPatrol.DefaultLookAngle = StaticPatrolDefaultLookAngleNUD.Value;
             AIPatrolSettings.isDirty = true;
         }
         private void darkButton4_Click(object sender, EventArgs e)
@@ -1512,6 +1610,8 @@ namespace DayZeEditor
                 Behaviour = "ALTERNATE",
                 Speed = "WALK",
                 UnderThreatSpeed = "SPRINT",
+                DefaultStance = "STANDING",
+                DefaultLookAngle = (decimal)0.0,
                 CanBeLooted = 1,
                 UnlimitedReload = 1,
                 SniperProneDistanceThreshold = (decimal)0.0,
@@ -1519,6 +1619,8 @@ namespace DayZeEditor
                 AccuracyMax = -1,
                 ThreatDistanceLimit = -1,
                 NoiseInvestigationDistanceLimit = -1,
+                MaxFlankingDistance = (decimal)200.0,
+                EnableFlankingOutsideCombat = 0,
                 DamageMultiplier = -1,
                 DamageReceivedMultiplier = -1,
                 MinDistRadius = -1,
@@ -1981,6 +2083,8 @@ namespace DayZeEditor
             AccuracyMaxNUD.Value = AISettings.AccuracyMax;
             ThreatDistanceLimitNUD.Value = AISettings.ThreatDistanceLimit;
             NoiseInvestigationDistanceLimitNUD.Value = AISettings.NoiseInvestigationDistanceLimit;
+            MaxFlankingDistanceNUD.Value = AISettings.MaxFlankingDistance;
+            EnableFlankingOutsideCombatCB.Checked = AISettings.EnableFlankingOutsideCombat == 1 ? true : false;
             DamageMultiplierNUD.Value = AISettings.DamageMultiplier;
             FormationScaleNUD.Value = AISettings.FormationScale;
             SniperProneDistanceThresholdNUD.Value = AISettings.SniperProneDistanceThreshold;
@@ -1989,11 +2093,18 @@ namespace DayZeEditor
             MannersCB.Checked = AISettings.Manners == 1 ? true : false;
             CanRecruitGuardsCB.Checked = AISettings.CanRecruitGuards == 1 ? true : false;
             CanRecruitFriendlyCB.Checked = AISettings.CanRecruitFriendly == 1 ? true : false;
+            MemeLevelNUD.Value = AISettings.MemeLevel;
+            MaxRecruitableAINUD.Value = AISettings.MaxRecruitableAI;
             LogAIHitByCB.Checked = AISettings.LogAIHitBy == 1 ? true : false;
             LogAIKilledCB.Checked = AISettings.LogAIKilled == 1 ? true : false;
 
             EnableZombieVehicleAttackHandlerCB.Checked = AISettings.EnableZombieVehicleAttackHandler == 1 ? true : false;
             EnableZombieVehicleAttackPhysicsCB.Checked = AISettings.EnableZombieVehicleAttackPhysics == 1 ? true : false;
+
+            AggressionTimeoutNUD.Value = AISettings.AggressionTimeout;
+            GuardAggressionTimeoutNUD.Value = AISettings.GuardAggressionTimeout;
+            OverrideClientWeaponFiringCB.Checked = AISettings.OverrideClientWeaponFiring == 1 ? true : false;
+            RecreateWeaponNetworkRepresentationCB.Checked = AISettings.RecreateWeaponNetworkRepresentation == 1 ? true : false;
 
             AISettingsAdminsLB.DisplayMember = "DisplayName";
             AISettingsAdminsLB.ValueMember = "Value";
@@ -2122,6 +2233,18 @@ namespace DayZeEditor
             AISettings.CanRecruitFriendly = CanRecruitFriendlyCB.Checked == true ? 1 : 0;
             AISettings.isDirty = true;
         }
+        private void MemeLevelNUD_ValueChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            AISettings.MemeLevel = (int)MemeLevelNUD.Value;
+            AISettings.isDirty = true;
+        }
+        private void MaxRecruitableAINUD_ValueChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            AISettings.MaxRecruitableAI = (int)MaxRecruitableAINUD.Value;
+            AISettings.isDirty = true;
+        }
         private void LogAIHitByCB_CheckedChanged(object sender, EventArgs e)
         {
             if (!useraction) return;
@@ -2202,6 +2325,43 @@ namespace DayZeEditor
         {
             if (!useraction) return;
             AISettings.EnableZombieVehicleAttackPhysics = EnableZombieVehicleAttackPhysicsCB.Checked == true ? 1 : 0;
+            AISettings.isDirty = true;
+        }
+        private void AggressionTimeoutNUD_ValueChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            AISettings.AggressionTimeout = AggressionTimeoutNUD.Value;
+            AISettings.isDirty = true;
+        }
+        private void GuardAggressionTimeoutNUD_ValueChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            AISettings.GuardAggressionTimeout = GuardAggressionTimeoutNUD.Value;
+            AISettings.isDirty = true;
+        }
+        private void OverrideClientWeaponFiringCB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            AISettings.OverrideClientWeaponFiring = OverrideClientWeaponFiringCB.Checked == true ? 1 : 0;
+            AISettings.isDirty = true;
+        }
+        private void RecreateWeaponNetworkRepresentationCB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            AISettings.RecreateWeaponNetworkRepresentation = RecreateWeaponNetworkRepresentationCB.Checked == true ? 1 : 0;
+            AISettings.isDirty = true;
+        }
+        private void MaxFlankingDistanceNUD_ValueChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            AISettings.MaxFlankingDistance = MaxFlankingDistanceNUD.Value;
+            AISettings.isDirty = true;
+        }
+
+        private void EnableFlankingOutsideCombatCB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!useraction) return;
+            AISettings.EnableFlankingOutsideCombat = EnableFlankingOutsideCombatCB.Checked == true ? 1 : 0;
             AISettings.isDirty = true;
         }
         #endregion AISettings
@@ -2793,6 +2953,7 @@ namespace DayZeEditor
         public Spatial_Location currentSpatialLocation { get; set; }
         public Spatial_Audio currentSpatialAudio { get; set; }
         public Vec3 currentspawnPosition { get; set; }
+
 
         private void SetupSpatialGroups()
         {
@@ -4424,6 +4585,11 @@ namespace DayZeEditor
         private void crashLootingBehaviousCLB_SelectedIndexChanged(object sender, EventArgs e)
         {
             ((CheckedListBox)sender).ClearSelected();
+        }
+
+        private void tabPage3_Click(object sender, EventArgs e)
+        {
+
         }
 
 
